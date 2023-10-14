@@ -30,7 +30,9 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  const slugs: slugType[] = await client.fetch(postSlugsQuery);
+  const slugs: slugType[] = await client.fetch(postSlugsQuery, {
+    next: { revalidate: 30 },
+  });
 
   return slugs.map((one: slugType) => ({ slug: one.slug.current }));
 }
